@@ -2,7 +2,6 @@ import { RepositorioReserva } from 'src/dominio/reserva/puerto/repositorio/repos
 import { Reserva } from 'src/dominio/reserva/modelo/reserva';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ReservaEntidad } from '../../entidad/reserva.entidad';
-import { UsuarioEntidad } from '../../../usuario/entidad/usuario.entidad';
 import { Repository } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 

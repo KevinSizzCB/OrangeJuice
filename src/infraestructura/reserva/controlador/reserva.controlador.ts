@@ -14,7 +14,6 @@ export class ReservaControlador {
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
   async crear(@Body() comandoRealizarReserva: ComandoRalizarReserva) {
-    console.log("crear reserva---------->", comandoRealizarReserva);
     return await this._manejadorRalizarReserva.ejecutar(comandoRealizarReserva);
   }
 

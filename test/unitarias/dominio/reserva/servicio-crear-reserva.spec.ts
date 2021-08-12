@@ -4,7 +4,6 @@ import { RepositorioReserva } from 'src/dominio/reserva/puerto/repositorio/repos
 import { RepositorioUsuario } from 'src/dominio/usuario/puerto/repositorio/repositorio-usuario';
 import { SinonStubbedInstance } from 'sinon';
 import { createStubObj } from '../../../util/create-object.stub';
-import { repositorioUsuarioProvider } from 'src/infraestructura/usuario/proveedor/repositorio/repositorio-usuario.proveedor';
 import { UsuarioEntidad } from 'src/infraestructura/usuario/entidad/usuario.entidad';
 
 describe('ServicioRalizarReserva', () => {
@@ -14,9 +13,9 @@ describe('ServicioRalizarReserva', () => {
   let repositorioUsuarioStub: SinonStubbedInstance<RepositorioUsuario>;
   const CANTIDAD_JUGOS = 20;
   const CINCO_PORCIENTO_JUGOS = (CANTIDAD_JUGOS*5)/100;
-  const DOS_PORCIENTO_JUGOS = (CANTIDAD_JUGOS*2)/100;
-  const RECARGO_FESTIVOS = 2000;
-  const PRECIO_JUGOS = 2000;
+  // const DOS_PORCIENTO_JUGOS = (CANTIDAD_JUGOS*2)/100;
+  // const RECARGO_FESTIVOS = 2000;
+  // const PRECIO_JUGOS = 2000;
 
 
   beforeEach(() => {
@@ -45,13 +44,13 @@ describe('ServicioRalizarReserva', () => {
 
     repositorioUsuarioStub.existeUsuario.returns(Promise.resolve(true));
     repositorioUsuarioStub.obtenerUsuario.returns(Promise.resolve(usuario));
-    reserva.precio_total = CANTIDAD_JUGOS - ((CINCO_PORCIENTO_JUGOS))
+    reserva.precio_total = CANTIDAD_JUGOS - (CINCO_PORCIENTO_JUGOS)
 
     await servicioRalizarReserva.ejecutar(reserva)
     
     expect(repositorioUsuarioStub.obtenerUsuario.getCalls().length).toBe(1)
     expect(repositorioUsuarioStub.actualizarAcumuladorMensual.getCalls().length).toBe(1)
-    expect(repositorioUsuarioStub.actualizarAcumuladorMensual.calledWith(usuario.id, usuario.acumulacion_compras_mensual)).toBeTruthy()
+    expect(repositorioUsuarioStub.actualizarAcumuladorMensual.calledWith(usuario.id, usuario.acumulacion_compras_mensual + 1)).toBeTruthy()
     expect(repositorioUsuarioStub.actualizarCompras.getCalls().length).toBe(1)
     expect(repositorioUsuarioStub.actualizarCompras.calledWith(usuario.id, reserva.fecha_creacion)).toBeTruthy()
     expect(repositorioReservaStub.guardar.getCalls().length).toBe(1)

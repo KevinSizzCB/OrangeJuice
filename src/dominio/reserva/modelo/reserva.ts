@@ -35,7 +35,6 @@ export class Reserva {
 
   validarDiaFestivo(fecha_creacion: Date){
     const [fecha] = fecha_creacion.toISOString().split("T");
-    console.log("fecha--->", fecha, DIAS_FESTIVOS,DIAS_FESTIVOS.includes(fecha) );
     return DIAS_FESTIVOS.includes(fecha)
   }
 

@@ -1,7 +1,6 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { ServicioRalizarReserva } from 'src/dominio/reserva/servicio/servicio-crear-reserva';
 import { RepositorioReserva } from 'src/dominio/reserva/puerto/repositorio/repositorio-reserva';
-import { servicioRegistrarreservaProveedor } from './servicio/servicio-crear-reserva.proveedor';
 import { repositorioreservaProvider } from './repositorio/repositorio-reserva.proveedor';
 import { daoReservaProvider } from './dao/dao-reserva.proveedor';
 import { ManejadorRalizarReserva } from 'src/aplicacion/reserva/comando/realizar-reserva.manejador';
@@ -15,9 +14,6 @@ import { UsuarioModule } from 'src/infraestructura/usuario/usuario.module';
 import { ServicioRegistrarUsuario } from 'src/dominio/usuario/servicio/servicio-registrar-usuario';
 import { repositorioUsuarioProvider } from 'src/infraestructura/usuario/proveedor/repositorio/repositorio-usuario.proveedor';
 import { daoUsuarioProvider } from 'src/infraestructura/usuario/proveedor/dao/dao-usuario.proveedor';
-import { ManejadorListarUsuario } from 'src/aplicacion/usuario/consulta/listar-usuarios.manejador';
-import { ManejadorRegistrarUsuario } from 'src/aplicacion/usuario/comando/registar-usuario.manejador';
-import { UsuarioProveedorModule } from 'src/infraestructura/usuario/proveedor/usuario-proveedor.module';
 
 @Module({
   imports: [
