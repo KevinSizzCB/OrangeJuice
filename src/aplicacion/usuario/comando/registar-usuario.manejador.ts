@@ -8,11 +8,14 @@ export class ManejadorRegistrarUsuario {
   constructor(private _servicioRegistrarUsuario: ServicioRegistrarUsuario) {}
 
   async ejecutar(comandoRegistrarUsuario: ComandoRegistrarUsuario) {
+    console.log("comandoRegistrarUsuario", comandoRegistrarUsuario);
+    
     return await this._servicioRegistrarUsuario.ejecutar(
       new Usuario(
         comandoRegistrarUsuario.nombre,
         comandoRegistrarUsuario.clave,
         comandoRegistrarUsuario.fechaCreacion,
+        comandoRegistrarUsuario.edad
       ),
     );
   }

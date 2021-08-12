@@ -16,11 +16,29 @@ export class RepositorioUsuarioMysql implements RepositorioUsuario {
     return (await this.repositorio.count({ nombre })) > 0;
   }
 
+  async obtenerUsuario(uid:number):Promise<UsuarioEntidad>{
+    return await this.repositorio.findOne({where:{id:uid}})
+  }
+
+  async existeUsuario(uid:number):Promise<boolean>{
+    return await this.repositorio.findOne({where:{id:uid}}) ? true: false;
+  }
+
+  async actualizarCompras(uid:number, fecha:Date): Promise<boolean>{
+    return await this.repositorio.update({id: uid}, {fecha_ultima_compra:fecha}) ? true : false;
+  }
+
+  async actualizarAcumuladorMensual(uid:number, acumulacion_compras_mensual:number): Promise<boolean>{
+    return await this.repositorio.update({id:uid}, {acumulacion_compras_mensual}) ? true:false;
+  }
+
   async guardar(usuario: Usuario) {
     const entidad = new UsuarioEntidad();
     entidad.clave = usuario.clave;
     entidad.fecha_creacion = usuario.fecha_creacion;
     entidad.nombre = usuario.nombre;
+    entidad.edad = usuario.edad;
+    entidad.fecha_ultima_compra = usuario.fecha_creacion;
     await this.repositorio.save(entidad);
   }
 }

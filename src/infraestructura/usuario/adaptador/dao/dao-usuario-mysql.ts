@@ -3,6 +3,7 @@ import { InjectEntityManager } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import { DaoUsuario } from 'src/dominio/usuario/puerto/dao/dao-usuario';
 import { UsuarioDto } from 'src/aplicacion/usuario/consulta/dto/usuario.dto';
+import { Usuario } from 'src/dominio/usuario/modelo/usuario';
 
 @Injectable()
 export class DaoUsuarioMysql implements DaoUsuario {
@@ -18,4 +19,10 @@ export class DaoUsuarioMysql implements DaoUsuario {
       'SELECT u.nombre, u.edad, u.acumulacion_compras_mensual FROM USUARIO u',
     );
   }
+
+  // async obtenerUsuario(uid:number):Promise<Usuario>{
+  //   return this.entityManager.query(
+  //     "SELECT u.nombre, u.edad, u.acumulacion_compras_mensual, u.fecha_ultima_compra FROM USUARIO u WHERE id=" + String(uid)
+  //   )
+  // }
 }

@@ -78,6 +78,7 @@ describe('Pruebas al controlador de usuarios', () => {
       nombre: 'Lorem ipsum',
       fechaCreacion: (new Date()).toISOString(),
       clave: '123',
+      edad:10
     };
     const mensaje = 'El tamaño mínimo de la clave debe ser 4';
 
@@ -93,6 +94,7 @@ describe('Pruebas al controlador de usuarios', () => {
       nombre: 'Lorem ipsum',
       fechaCreacion: (new Date()).toISOString(),
       clave: '1234',
+      edad:10
     };
     const mensaje = `El nombre de usuario ${usuario.nombre} ya existe`;
     repositorioUsuario.existeNombreUsuario.returns(Promise.resolve(true));

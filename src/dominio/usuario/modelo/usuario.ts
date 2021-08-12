@@ -5,11 +5,13 @@ export class Usuario {
   readonly #nombre: string;
   readonly #clave: string;
   readonly #fecha_creacion: Date;
+  readonly #edad: number;
 
-  constructor(nombre: string, clave: string, fechaCreacion: string) {
+  constructor(nombre: string, clave: string, fechaCreacion: string, edad: number) {
     this.validarTamanoClave(clave);
     this.#nombre = nombre;
     this.#clave = clave;
+    this.#edad = edad;
     this.#fecha_creacion = new Date(fechaCreacion);
   }
 
@@ -31,5 +33,8 @@ export class Usuario {
 
   get fecha_creacion(): Date {
     return this.#fecha_creacion;
+  }
+  get edad():number{
+    return this.#edad
   }
 }

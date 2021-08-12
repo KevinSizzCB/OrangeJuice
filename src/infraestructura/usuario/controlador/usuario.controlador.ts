@@ -17,7 +17,6 @@ export class UsuarioControlador {
     console.log("----------->", comandoRegistrarUsuario);
     
     return await this._manejadorRegistrarUsuario.ejecutar(comandoRegistrarUsuario);
-    // return {}
   }
 
   @Get()
