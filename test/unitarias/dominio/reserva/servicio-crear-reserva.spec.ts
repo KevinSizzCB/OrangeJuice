@@ -12,10 +12,20 @@ describe('ServicioRalizarReserva', () => {
   let repositorioReservaStub: SinonStubbedInstance<RepositorioReserva>;
   let repositorioUsuarioStub: SinonStubbedInstance<RepositorioUsuario>;
   const CANTIDAD_JUGOS = 20;
-  const CINCO_PORCIENTO_JUGOS = (CANTIDAD_JUGOS*5)/100;
-  // const DOS_PORCIENTO_JUGOS = (CANTIDAD_JUGOS*2)/100;
-  // const RECARGO_FESTIVOS = 2000;
-  // const PRECIO_JUGOS = 2000;
+  const PRECIO_JUGOS = 2000;
+  const SUBTOTAL_JUGOS = PRECIO_JUGOS*CANTIDAD_JUGOS; 
+  const CINCO_PORCIENTO_JUGOS = (CANTIDAD_JUGOS*5*PRECIO_JUGOS)/100;
+  const DOS_PORCIENTO_JUGOS = (CANTIDAD_JUGOS*2*PRECIO_JUGOS)/100;
+  const RECARGO_FESTIVOS = 2000;
+  const usuario: UsuarioEntidad = {
+    id:1, 
+    acumulacion_compras_mensual:0, 
+    clave:'1234', 
+    fecha_ultima_compra: new Date(), 
+    edad:10, 
+    nombre:"juan", 
+    fecha_creacion:new Date()
+  }
 
 
   beforeEach(() => {
@@ -31,23 +41,17 @@ describe('ServicioRalizarReserva', () => {
   });
 
   it(`si el usuario es menor de edad y compra ${CANTIDAD_JUGOS} jugos`, async()=>{
-    const usuario: UsuarioEntidad = {
-        id:1, 
-        acumulacion_compras_mensual:0, 
-        clave:'1234', 
-        fecha_ultima_compra: new Date(), 
-        edad:10, 
-        nombre:"juan", 
-        fecha_creacion:new Date()
-    }
+    
     const reserva:Reserva = new Reserva(usuario.id, CANTIDAD_JUGOS, new Date().toISOString())
 
     repositorioUsuarioStub.existeUsuario.returns(Promise.resolve(true));
     repositorioUsuarioStub.obtenerUsuario.returns(Promise.resolve(usuario));
-    reserva.precio_total = CANTIDAD_JUGOS - (CINCO_PORCIENTO_JUGOS)
+    const PRECIO_ESPERADO = SUBTOTAL_JUGOS - (CINCO_PORCIENTO_JUGOS)
 
     await servicioRalizarReserva.ejecutar(reserva)
     
+    expect(repositorioUsuarioStub.existeUsuario.getCalls().length).toBe(1)
+    expect(repositorioUsuarioStub.existeUsuario.calledWith(reserva.uid)).toBeTruthy()
     expect(repositorioUsuarioStub.obtenerUsuario.getCalls().length).toBe(1)
     expect(repositorioUsuarioStub.actualizarAcumuladorMensual.getCalls().length).toBe(1)
     expect(repositorioUsuarioStub.actualizarAcumuladorMensual.calledWith(usuario.id, usuario.acumulacion_compras_mensual + 1)).toBeTruthy()
@@ -55,6 +59,60 @@ describe('ServicioRalizarReserva', () => {
     expect(repositorioUsuarioStub.actualizarCompras.calledWith(usuario.id, reserva.fecha_creacion)).toBeTruthy()
     expect(repositorioReservaStub.guardar.getCalls().length).toBe(1)
     expect(repositorioReservaStub.guardar.calledWith(reserva)).toBeTruthy()
+    expect(reserva.precio_total).toBe(PRECIO_ESPERADO)
+
+  })
+
+  it(`si el usuario tiene más de 5 compras en el mes y compra ${CANTIDAD_JUGOS} jugos`, async()=>{
+    usuario.edad = 19;
+    usuario.acumulacion_compras_mensual = 6;
+
+    const reserva:Reserva = new Reserva(usuario.id, CANTIDAD_JUGOS, new Date().toISOString())
+
+    repositorioUsuarioStub.existeUsuario.returns(Promise.resolve(true));
+    repositorioUsuarioStub.obtenerUsuario.returns(Promise.resolve(usuario));
+    const PRECIO_ESPERADO = SUBTOTAL_JUGOS - (DOS_PORCIENTO_JUGOS);
+
+    await servicioRalizarReserva.ejecutar(reserva)
+
+    expect(repositorioUsuarioStub.existeUsuario.getCalls().length).toBe(1)
+    expect(repositorioUsuarioStub.existeUsuario.calledWith(reserva.uid)).toBeTruthy()
+    expect(repositorioUsuarioStub.obtenerUsuario.getCalls().length).toBe(1)
+    expect(repositorioUsuarioStub.actualizarAcumuladorMensual.getCalls().length).toBe(1)
+    expect(repositorioUsuarioStub.actualizarAcumuladorMensual.calledWith(usuario.id, usuario.acumulacion_compras_mensual + 1)).toBeTruthy()
+    expect(repositorioUsuarioStub.actualizarCompras.getCalls().length).toBe(1)
+    expect(repositorioUsuarioStub.actualizarCompras.calledWith(usuario.id, reserva.fecha_creacion)).toBeTruthy()
+    expect(repositorioReservaStub.guardar.getCalls().length).toBe(1)
+    expect(repositorioReservaStub.guardar.calledWith(reserva)).toBeTruthy()
+    expect(reserva.precio_total).toBe(PRECIO_ESPERADO)
+
+  })
+
+  it(`si el usuario realiza la compra un día festivo y compra ${CANTIDAD_JUGOS} jugos`, async()=>{
+    usuario.edad = 19;
+    usuario.acumulacion_compras_mensual = 0;
+
+    const DIA_FESTIVO = new Date();
+    DIA_FESTIVO.setDate(DIA_FESTIVO.getDate()+1);
+    
+    const reserva:Reserva = new Reserva(usuario.id, CANTIDAD_JUGOS, DIA_FESTIVO.toISOString())
+
+    repositorioUsuarioStub.existeUsuario.returns(Promise.resolve(true));
+    repositorioUsuarioStub.obtenerUsuario.returns(Promise.resolve(usuario));
+    const PRECIO_ESPERADO = SUBTOTAL_JUGOS + 2000;
+
+    await servicioRalizarReserva.ejecutar(reserva)
+
+    expect(repositorioUsuarioStub.existeUsuario.getCalls().length).toBe(1)
+    expect(repositorioUsuarioStub.existeUsuario.calledWith(reserva.uid)).toBeTruthy()
+    expect(repositorioUsuarioStub.obtenerUsuario.getCalls().length).toBe(1)
+    expect(repositorioUsuarioStub.actualizarAcumuladorMensual.getCalls().length).toBe(1)
+    expect(repositorioUsuarioStub.actualizarAcumuladorMensual.calledWith(usuario.id, usuario.acumulacion_compras_mensual + 1)).toBeTruthy()
+    expect(repositorioUsuarioStub.actualizarCompras.getCalls().length).toBe(1)
+    expect(repositorioUsuarioStub.actualizarCompras.calledWith(usuario.id, reserva.fecha_creacion)).toBeTruthy()
+    expect(repositorioReservaStub.guardar.getCalls().length).toBe(1)
+    expect(repositorioReservaStub.guardar.calledWith(reserva)).toBeTruthy()
+    expect(reserva.precio_total).toBe(PRECIO_ESPERADO)
 
   })
 
