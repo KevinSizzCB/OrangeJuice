@@ -35,7 +35,6 @@ import { daoUsuarioProvider } from 'src/infraestructura/usuario/proveedor/dao/da
     daoReservaProvider,
     ManejadorRalizarReserva,
     ManejadorListarReserva,
-
     repositorioUsuarioProvider,
     daoUsuarioProvider,
   ],

@@ -64,7 +64,7 @@ describe('Pruebas al controlador de usuarios', () => {
 
   it('debería listar los usuarios registrados', () => {
 
-    const usuarios: any[] = [{ nombre: 'Lorem ipsum', fechaCreacion: (new Date().toISOString()) }];
+    const usuarios: any[] = [{ nombre: 'Lorem ipsum', fechaCreacion: (new Date().toISOString()), edad: 10 }];
     daoUsuario.listar.returns(Promise.resolve(usuarios));
 
     return request(app.getHttpServer())
@@ -78,7 +78,7 @@ describe('Pruebas al controlador de usuarios', () => {
       nombre: 'Lorem ipsum',
       fechaCreacion: (new Date()).toISOString(),
       clave: '123',
-      edad:10
+      edad: 10
     };
     const mensaje = 'El tamaño mínimo de la clave debe ser 4';
 
@@ -94,7 +94,7 @@ describe('Pruebas al controlador de usuarios', () => {
       nombre: 'Lorem ipsum',
       fechaCreacion: (new Date()).toISOString(),
       clave: '1234',
-      edad:10
+      edad: 10
     };
     const mensaje = `El nombre de usuario ${usuario.nombre} ya existe`;
     repositorioUsuario.existeNombreUsuario.returns(Promise.resolve(true));
