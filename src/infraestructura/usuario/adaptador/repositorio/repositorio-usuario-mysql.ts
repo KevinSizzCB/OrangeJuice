@@ -17,19 +17,19 @@ export class RepositorioUsuarioMysql implements RepositorioUsuario {
   }
 
   async obtenerUsuario(uid: number): Promise<UsuarioEntidad> {
-    return await this.repositorio.findOne({ where: { id: uid } });
+    return (await this.repositorio.findOne({ where: { id: uid } }));
   }
 
   async existeUsuario(uid: number): Promise<boolean> {
-    return await this.repositorio.findOne({ where: { id: uid } }) ? true : false;
+    return (await this.repositorio.findOne({ where: { id: uid } })) ? true : false;
   }
 
   async actualizarCompras(uid: number, fecha: Date): Promise<boolean> {
-    return await this.repositorio.update({ id: uid }, { fecha_ultima_compra: fecha }) ? true : false;
+    return (await this.repositorio.update({ id: uid }, { fecha_ultima_compra: fecha })) ? true : false;
   }
 
   async actualizarAcumuladorMensual(uid: number, acumulacion_compras_mensual: number): Promise<boolean> {
-    return await this.repositorio.update({ id: uid }, { acumulacion_compras_mensual }) ? true : false;
+    return (await this.repositorio.update({ id: uid }, { acumulacion_compras_mensual })) ? true : false;
   }
 
   async guardar(usuario: Usuario) {

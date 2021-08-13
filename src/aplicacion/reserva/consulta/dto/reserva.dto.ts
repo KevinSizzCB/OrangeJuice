@@ -10,5 +10,5 @@ export class ReservaDto {
 
   @ApiProperty({ type: Date })
   fecha_creacion: string;
-  
+
 }

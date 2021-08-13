@@ -28,7 +28,7 @@ export class ServicioRalizarReserva {
 
   async ejecutar(reserva: Reserva) {
     if (!await this._repositorioUsuario.existeUsuario(reserva.uid)) {
-      throw new ErrorDeNegocio("Usuario no encontrado");
+      throw new ErrorDeNegocio('Usuario no encontrado');
     }
 
     const { edad, fecha_ultima_compra, acumulacion_compras_mensual } = await this._repositorioUsuario.obtenerUsuario(reserva.uid);

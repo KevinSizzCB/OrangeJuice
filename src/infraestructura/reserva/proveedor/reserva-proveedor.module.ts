@@ -17,36 +17,20 @@ import { daoUsuarioProvider } from 'src/infraestructura/usuario/proveedor/dao/da
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ReservaEntidad, UsuarioEntidad]), 
-    /* UsuarioModule, */ 
-    forwardRef(() => UsuarioModule), 
-    // forwardRef(() => UsuarioProveedorModule)
-    // UsuarioProveedorModule
+    TypeOrmModule.forFeature([ReservaEntidad, UsuarioEntidad]),
+    forwardRef(() => UsuarioModule),
   ],
   providers: [
-    // { 
-    //   provide:ServicioRalizarReserva,
-    //   inject: [RepositorioReserva], 
-    //   useFactory: servicioRegistrarreservaProveedor
-    // },
-
     {
       provide: ServicioRegistrarUsuario,
-      inject: [RepositorioUsuario], 
+      inject: [RepositorioUsuario],
       useClass: ServicioRalizarReserva
     },
-    { 
-      provide:ServicioRalizarReserva,
-      inject: [RepositorioReserva], 
+    {
+      provide: ServicioRalizarReserva,
+      inject: [RepositorioReserva],
       useClass: ServicioRalizarReserva
     },
-
-    // {
-    //   provide: ServicioRegistrarUsuario,
-    //   inject:[RepositorioUsuario],
-    //   useClass: ServicioRalizarReserva
-    //   // useFactory: servicioRegistrarreservaProveedor
-    // },
     repositorioreservaProvider,
     daoReservaProvider,
     ManejadorRalizarReserva,
@@ -54,8 +38,6 @@ import { daoUsuarioProvider } from 'src/infraestructura/usuario/proveedor/dao/da
 
     repositorioUsuarioProvider,
     daoUsuarioProvider,
-    // ManejadorListarUsuario,
-    // ManejadorRegistrarUsuario
   ],
   exports: [
     ServicioRalizarReserva,
@@ -63,8 +45,6 @@ import { daoUsuarioProvider } from 'src/infraestructura/usuario/proveedor/dao/da
     ManejadorListarReserva,
     RepositorioReserva,
     DaoReserva,
-    // UsuarioModule,
-    // RepositorioUsuario
   ],
 })
-export class ReservaProveedorModule {}
+export class ReservaProveedorModule { }
