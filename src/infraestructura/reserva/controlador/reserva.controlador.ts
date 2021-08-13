@@ -9,12 +9,12 @@ export class ReservaControlador {
   constructor(
     private readonly _manejadorRalizarReserva: ManejadorRalizarReserva,
     private readonly _manejadorListarReserva: ManejadorListarReserva,
-  ) {}
+  ) { }
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
   async crear(@Body() comandoRealizarReserva: ComandoRalizarReserva) {
-    return await this._manejadorRalizarReserva.ejecutar(comandoRealizarReserva);
+    return this._manejadorRalizarReserva.ejecutar(comandoRealizarReserva);
   }
 
   @Get()

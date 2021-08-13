@@ -14,6 +14,6 @@ export class ServicioRegistrarUsuario {
       );
     }
     await this._repositorioUsuario.guardar(usuario);
-    return "Usuario creado de forma satisfactoria";
+    return 'Usuario creado de forma satisfactoria';
   }
 }

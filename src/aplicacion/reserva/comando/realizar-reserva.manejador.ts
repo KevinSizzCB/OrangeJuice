@@ -8,7 +8,7 @@ export class ManejadorRalizarReserva {
   constructor(private _servicioRalizarReserva: ServicioRalizarReserva) {}
 
   async ejecutar(comandoRealizarReserva: ComandoRalizarReserva) {
-    return await this._servicioRalizarReserva.ejecutar(
+    return this._servicioRalizarReserva.ejecutar(
       new Reserva(
         comandoRealizarReserva.uid,
         comandoRealizarReserva.cantidad_jugos,

@@ -94,12 +94,12 @@ describe('ServicioRalizarReserva', () => {
 
     const DIA_FESTIVO = new Date();
     DIA_FESTIVO.setDate(DIA_FESTIVO.getDate()+1);
-    
+
     const reserva:Reserva = new Reserva(usuario.id, CANTIDAD_JUGOS, DIA_FESTIVO.toISOString())
 
     repositorioUsuarioStub.existeUsuario.returns(Promise.resolve(true));
     repositorioUsuarioStub.obtenerUsuario.returns(Promise.resolve(usuario));
-    const PRECIO_ESPERADO = SUBTOTAL_JUGOS + 2000;
+    const PRECIO_ESPERADO = SUBTOTAL_JUGOS + RECARGO_FESTIVOS;
 
     await servicioRalizarReserva.ejecutar(reserva)
 
@@ -115,6 +115,10 @@ describe('ServicioRalizarReserva', () => {
     expect(reserva.precio_total).toBe(PRECIO_ESPERADO)
 
   })
+
+  // it(`si el usuario realiza una compra un mes después`, async()=>{
+
+  // })
 
 //   it('si el nombre de usuario ya existe no se puede crear y deberia retonar error', async () => {
 

@@ -9,19 +9,11 @@ export class DaoUsuarioMysql implements DaoUsuario {
   constructor(
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
-  ) {}
+  ) { }
 
   async listar(): Promise<UsuarioDto[]> {
-    // return this.entityManager.find({})
     return this.entityManager.query(
-      // 'SELECT u.nombre, u.fechaCreacion FROM USUARIO u',  u.nombre, u.edad, u.acumulacionComprasMensual
       'SELECT u.nombre, u.edad, u.acumulacion_compras_mensual FROM USUARIO u',
     );
   }
-
-  // async obtenerUsuario(uid:number):Promise<Usuario>{
-  //   return this.entityManager.query(
-  //     "SELECT u.nombre, u.edad, u.acumulacion_compras_mensual, u.fecha_ultima_compra FROM USUARIO u WHERE id=" + String(uid)
-  //   )
-  // }
 }

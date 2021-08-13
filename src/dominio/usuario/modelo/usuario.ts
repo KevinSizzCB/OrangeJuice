@@ -34,7 +34,7 @@ export class Usuario {
   get fecha_creacion(): Date {
     return this.#fecha_creacion;
   }
-  get edad():number{
-    return this.#edad
+  get edad(): number {
+    return this.#edad;
   }
 }

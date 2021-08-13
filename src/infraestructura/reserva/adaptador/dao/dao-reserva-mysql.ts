@@ -9,10 +9,9 @@ export class DaoReservaMysql implements DaoReserva {
   constructor(
     @InjectEntityManager()
     private readonly entityManager: EntityManager,
-  ) {}
+  ) { }
 
   async listar(): Promise<ReservaDto[]> {
-    // return this.entityManager.find({})
     return this.entityManager.query(
       'SELECT * FROM RESERVA u'
     );

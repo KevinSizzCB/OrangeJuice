@@ -1,19 +1,19 @@
 import { ErrorCantidadJugos } from 'src/dominio/errores/error-cantidad-jugos';
 
 const PRECIO_JUGO = 2000;
-const MAÑANA = new Date();
-MAÑANA.setDate(MAÑANA.getDate()+1);
+const MAnANA = new Date();
+MAnANA.setDate(MAnANA.getDate() + 1);
 const AYER = new Date();
-AYER.setDate(MAÑANA.getDate()-2);
+AYER.setDate(AYER.getDate() - 1);
 const DIAS_FESTIVOS = [
-  MAÑANA.toISOString().split("T")[0],
-  AYER.toISOString().split("T")[0]
-]
+  MAnANA.toISOString().split('T')[0],
+  AYER.toISOString().split('T')[0]
+];
 export class Reserva {
   readonly #uid: number;
   readonly #fecha_creacion: Date;
   readonly #cantidad_jugos: number;
-  #precio_total:number;
+  #precio_total: number;
 
   constructor(uid: number, cantidad_jugos: number, fecha_creacion: string) {
     this.validarCantidadJugos(cantidad_jugos);
@@ -21,21 +21,21 @@ export class Reserva {
     this.#uid = uid;
     this.#cantidad_jugos = cantidad_jugos;
     this.#fecha_creacion = new Date(fecha_creacion);
-  } 
+  }
 
-  private calcularSubTotal(cantidad_jugos: number){
+  private calcularSubTotal(cantidad_jugos: number) {
     this.#precio_total = cantidad_jugos * PRECIO_JUGO;
   }
 
-  private validarCantidadJugos(cantidad_jugos:number){
-    if(cantidad_jugos<=0){
-      throw new ErrorCantidadJugos("La cantidad de jugos debes ser mayor a 0");
+  private validarCantidadJugos(cantidad_jugos: number) {
+    if (cantidad_jugos <= 0) {
+      throw new ErrorCantidadJugos('La cantidad de jugos debes ser mayor a 0');
     }
   }
 
-  validarDiaFestivo(fecha_creacion: Date){
-    const [fecha] = fecha_creacion.toISOString().split("T");
-    return DIAS_FESTIVOS.includes(fecha)
+  validarDiaFestivo(fecha_creacion: Date) {
+    const [fecha] = fecha_creacion.toISOString().split('T');
+    return DIAS_FESTIVOS.includes(fecha);
   }
 
   get uid(): number {
@@ -50,7 +50,7 @@ export class Reserva {
     return this.#precio_total;
   }
 
-  set precio_total(precio:number){
+  set precio_total(precio: number) {
     this.#precio_total = precio;
   }
 

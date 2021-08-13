@@ -9,12 +9,12 @@ export class UsuarioControlador {
   constructor(
     private readonly _manejadorRegistrarUsuario: ManejadorRegistrarUsuario,
     private readonly _manejadorListarUsuario: ManejadorListarUsuario,
-  ) {}
+  ) { }
 
   @Post()
   @UsePipes(new ValidationPipe({ transform: true }))
   async crear(@Body() comandoRegistrarUsuario: ComandoRegistrarUsuario) {
-    return await this._manejadorRegistrarUsuario.ejecutar(comandoRegistrarUsuario);
+    return this._manejadorRegistrarUsuario.ejecutar(comandoRegistrarUsuario);
   }
 
   @Get()
