@@ -18,6 +18,6 @@ export class RepositorioReservaMysql implements RepositorioReserva {
     entidad.cantidad_jugos = reserva.cantidad_jugos;
     entidad.uid = reserva.uid;
     entidad.precio_total = reserva.precio_total;
-    return await this.repositorio.save(entidad);
+    return this.repositorio.save(entidad);
   }
 }

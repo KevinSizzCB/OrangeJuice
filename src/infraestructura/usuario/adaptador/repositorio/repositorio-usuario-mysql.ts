@@ -17,7 +17,7 @@ export class RepositorioUsuarioMysql implements RepositorioUsuario {
   }
 
   async obtenerUsuario(uid: number): Promise<UsuarioEntidad | null> {
-    return await this.repositorio.findOne({ where: { id: uid } });
+    return this.repositorio.findOne({ where: { id: uid } });
   }
 
   async existeUsuario(uid: number): Promise<boolean> {
@@ -50,7 +50,7 @@ export class RepositorioUsuarioMysql implements RepositorioUsuario {
   async obtenerUsuarioPorNombre(
     nombre: string,
   ): Promise<UsuarioEntidad | null> {
-    return await this.repositorio.findOne({ where: { nombre: nombre } });
+    return this.repositorio.findOne({ where: { nombre } });
   }
 
   async guardar(usuario: Usuario) {

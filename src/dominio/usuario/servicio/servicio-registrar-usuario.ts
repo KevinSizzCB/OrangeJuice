@@ -11,7 +11,6 @@ export class ServicioRegistrarUsuario {
         `El nombre de usuario ${usuario.nombre} ya existe`,
       );
     }
-    const _usuario = await this._repositorioUsuario.guardar(usuario);
-    return _usuario;
+    return this._repositorioUsuario.guardar(usuario);
   }
 }
