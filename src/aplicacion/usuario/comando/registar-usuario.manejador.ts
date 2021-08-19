@@ -13,7 +13,7 @@ export class ManejadorRegistrarUsuario {
         comandoRegistrarUsuario.nombre,
         comandoRegistrarUsuario.clave,
         comandoRegistrarUsuario.fecha_creacion,
-        comandoRegistrarUsuario.edad
+        comandoRegistrarUsuario.edad,
       ),
     );
   }

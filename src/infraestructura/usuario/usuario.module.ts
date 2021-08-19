@@ -3,9 +3,7 @@ import { UsuarioControlador } from './controlador/usuario.controlador';
 import { UsuarioProveedorModule } from './proveedor/usuario-proveedor.module';
 
 @Module({
-  imports: [
-    UsuarioProveedorModule,
-  ],
+  imports: [UsuarioProveedorModule],
   controllers: [UsuarioControlador],
 })
-export class UsuarioModule {}
+export class UsuarioModule { }

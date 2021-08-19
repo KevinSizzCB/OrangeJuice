@@ -1,4 +1,4 @@
-import { IsDateString, IsNumber, IsNumberString } from 'class-validator';
+import { IsDateString, IsNumber } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ComandoRalizarReserva {

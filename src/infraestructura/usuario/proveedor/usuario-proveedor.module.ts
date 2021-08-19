@@ -14,16 +14,24 @@ import { servicioLoguearUsuarioProveedor } from './servicio/servicio-loguear-usu
 import { ManejadorLoguearUsuario } from 'src/aplicacion/usuario/comando/loguear-usuario.manejador';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([UsuarioEntidad]), /* ReservaProveedorModule */],
+  imports: [TypeOrmModule.forFeature([UsuarioEntidad])],
   providers: [
-    { provide: ServicioRegistrarUsuario, inject: [RepositorioUsuario], useFactory: servicioRegistrarUsuarioProveedor },
-    { provide: ServicioLoguearUsuario, inject: [RepositorioUsuario], useFactory: servicioLoguearUsuarioProveedor },
+    {
+      provide: ServicioRegistrarUsuario,
+      inject: [RepositorioUsuario],
+      useFactory: servicioRegistrarUsuarioProveedor,
+    },
+    {
+      provide: ServicioLoguearUsuario,
+      inject: [RepositorioUsuario],
+      useFactory: servicioLoguearUsuarioProveedor,
+    },
 
     repositorioUsuarioProvider,
     daoUsuarioProvider,
     ManejadorRegistrarUsuario,
     ManejadorListarUsuario,
-    ManejadorLoguearUsuario
+    ManejadorLoguearUsuario,
   ],
   exports: [
     ServicioRegistrarUsuario,
@@ -34,6 +42,4 @@ import { ManejadorLoguearUsuario } from 'src/aplicacion/usuario/comando/loguear-
     DaoUsuario,
   ],
 })
-export class UsuarioProveedorModule {
-
-}
+export class UsuarioProveedorModule { }

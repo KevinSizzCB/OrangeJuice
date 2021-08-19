@@ -3,9 +3,7 @@ import { ReservaControlador } from './controlador/reserva.controlador';
 import { ReservaProveedorModule } from './proveedor/reserva-proveedor.module';
 
 @Module({
-  imports: [
-    ReservaProveedorModule
-  ],
+  imports: [ReservaProveedorModule],
   controllers: [ReservaControlador],
 })
-export class ReservaModule {}
+export class ReservaModule { }

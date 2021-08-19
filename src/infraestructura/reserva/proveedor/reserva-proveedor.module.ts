@@ -24,12 +24,12 @@ import { daoUsuarioProvider } from 'src/infraestructura/usuario/proveedor/dao/da
     {
       provide: ServicioRegistrarUsuario,
       inject: [RepositorioUsuario],
-      useClass: ServicioRalizarReserva
+      useClass: ServicioRalizarReserva,
     },
     {
       provide: ServicioRalizarReserva,
       inject: [RepositorioReserva],
-      useClass: ServicioRalizarReserva
+      useClass: ServicioRalizarReserva,
     },
     repositorioreservaProvider,
     daoReservaProvider,

@@ -5,7 +5,7 @@ import { Reserva } from 'src/dominio/reserva/modelo/reserva';
 
 @Injectable()
 export class ManejadorRalizarReserva {
-  constructor(private _servicioRalizarReserva: ServicioRalizarReserva) {}
+  constructor(private _servicioRalizarReserva: ServicioRalizarReserva) { }
 
   async ejecutar(comandoRealizarReserva: ComandoRalizarReserva) {
     return this._servicioRalizarReserva.ejecutar(

@@ -7,8 +7,6 @@ export class ManejadorLoguearUsuario {
   constructor(private _servicioRegistrarUsuario: ServicioLoguearUsuario) { }
 
   async ejecutar(comandoLoguearUsuario: ComandoLoguearUsuario) {
-    return this._servicioRegistrarUsuario.ejecutar(
-      comandoLoguearUsuario
-    );
+    return this._servicioRegistrarUsuario.ejecutar(comandoLoguearUsuario);
   }
 }

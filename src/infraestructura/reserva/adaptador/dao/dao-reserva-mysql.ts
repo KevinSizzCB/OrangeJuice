@@ -12,8 +12,6 @@ export class DaoReservaMysql implements DaoReserva {
   ) { }
 
   async listar(uid: number): Promise<ReservaDto[]> {
-    return this.entityManager.query(
-      `SELECT * FROM RESERVA WHERE uid=${uid}`
-    );
+    return this.entityManager.query(`SELECT * FROM RESERVA WHERE uid=${uid}`);
   }
 }

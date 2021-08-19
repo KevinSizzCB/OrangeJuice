@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { ComandoRegistrarUsuario } from 'src/aplicacion/usuario/comando/registrar-usuario.comando';
 import { ManejadorRegistrarUsuario } from 'src/aplicacion/usuario/comando/registar-usuario.manejador';
 import { ManejadorListarUsuario } from 'src/aplicacion/usuario/consulta/listar-usuarios.manejador';
@@ -23,7 +30,7 @@ export class UsuarioControlador {
   @Post('/login')
   @UsePipes(new ValidationPipe({ transform: true }))
   async loguear(@Body() comandoLoguearUsuario: ComandoLoguearUsuario) {
-    return this._manejadorLoguearUsuario.ejecutar(comandoLoguearUsuario)
+    return this._manejadorLoguearUsuario.ejecutar(comandoLoguearUsuario);
   }
 
   @Get()

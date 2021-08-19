@@ -1,6 +1,11 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-@Entity({ name: 'reserva', /* synchronize:false */ })
+@Entity({ name: 'reserva' })
 export class ReservaEntidad {
   @PrimaryGeneratedColumn()
   id: number;

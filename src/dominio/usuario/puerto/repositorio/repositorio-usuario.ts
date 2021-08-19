@@ -9,6 +9,11 @@ export abstract class RepositorioUsuario {
   abstract obtenerUsuario(uid: number): Promise<UsuarioEntidad | null>;
   abstract existeUsuario(uid: number): Promise<boolean>;
   abstract actualizarCompras(uid: number, fecha: Date): Promise<boolean>;
-  abstract actualizarAcumuladorMensual(uid: number, acumulacion_compras_mensual: number): Promise<boolean>;
-  abstract obtenerUsuarioPorNombre(nombre: string): Promise<UsuarioEntidad | null>;
+  abstract actualizarAcumuladorMensual(
+    uid: number,
+    acumulacion_compras_mensual: number,
+  ): Promise<boolean>;
+  abstract obtenerUsuarioPorNombre(
+    nombre: string,
+  ): Promise<UsuarioEntidad | null>;
 }

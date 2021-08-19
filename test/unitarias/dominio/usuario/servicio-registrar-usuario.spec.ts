@@ -4,20 +4,21 @@ import { RepositorioUsuario } from 'src/dominio/usuario/puerto/repositorio/repos
 import { SinonStubbedInstance } from 'sinon';
 import { createStubObj } from '../../../util/create-object.stub';
 
-
 describe('ServicioRegistrarUsuario', () => {
-
   let servicioRegistrarUsuario: ServicioRegistrarUsuario;
   let repositorioUsuarioStub: SinonStubbedInstance<RepositorioUsuario>;
 
   beforeEach(() => {
-
-    repositorioUsuarioStub = createStubObj<RepositorioUsuario>(['existeNombreUsuario', 'guardar']);
-    servicioRegistrarUsuario = new ServicioRegistrarUsuario(repositorioUsuarioStub);
+    repositorioUsuarioStub = createStubObj<RepositorioUsuario>([
+      'existeNombreUsuario',
+      'guardar',
+    ]);
+    servicioRegistrarUsuario = new ServicioRegistrarUsuario(
+      repositorioUsuarioStub,
+    );
   });
 
   it('si el nombre de usuario ya existe no se puede crear y deberia retonar error', async () => {
-
     repositorioUsuarioStub.existeNombreUsuario.returns(Promise.resolve(true));
 
     await expect(
@@ -30,7 +31,6 @@ describe('ServicioRegistrarUsuario', () => {
   it('si el nombre no existe guarda el usuario el repositorio', async () => {
     const usuario = new Usuario('juan', '1234', new Date().toISOString(), 10);
     repositorioUsuarioStub.existeNombreUsuario.returns(Promise.resolve(false));
-
     await servicioRegistrarUsuario.ejecutar(usuario);
 
     expect(repositorioUsuarioStub.guardar.getCalls().length).toBe(1);

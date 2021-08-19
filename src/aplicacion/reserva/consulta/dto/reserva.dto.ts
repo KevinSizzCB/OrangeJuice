@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ReservaDto {
-
   @ApiProperty({ example: 0 })
   uid: number;
 
@@ -10,5 +9,4 @@ export class ReservaDto {
 
   @ApiProperty({ type: Date })
   fecha_creacion: string;
-
 }
