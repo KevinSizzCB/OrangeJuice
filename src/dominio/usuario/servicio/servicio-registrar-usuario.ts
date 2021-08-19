@@ -13,7 +13,8 @@ export class ServicioRegistrarUsuario {
         `El nombre de usuario ${usuario.nombre} ya existe`,
       );
     }
-    await this._repositorioUsuario.guardar(usuario);
-    return 'Usuario creado de forma satisfactoria';
+    const _usuario = await this._repositorioUsuario.guardar(usuario);
+    delete _usuario["clave"];
+    return _usuario;
   }
 }

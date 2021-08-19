@@ -1,13 +1,13 @@
-import { IsDateString, IsNumber} from 'class-validator';
+import { IsDateString, IsNumber, IsNumberString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ComandoRalizarReserva {
   @IsNumber()
-  @ApiProperty({ example: 0})
+  @ApiProperty({ example: 0 })
   public uid: number;
 
   @IsNumber()
-  @ApiProperty({example: 0 })
+  @ApiProperty({ example: 0 })
   public cantidad_jugos: number;
 
   @IsDateString()

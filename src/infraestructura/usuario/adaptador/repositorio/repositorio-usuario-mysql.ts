@@ -16,7 +16,7 @@ export class RepositorioUsuarioMysql implements RepositorioUsuario {
     return (await this.repositorio.count({ nombre })) > 0;
   }
 
-  async obtenerUsuario(uid: number): Promise<UsuarioEntidad> {
+  async obtenerUsuario(uid: number): Promise<UsuarioEntidad | null> {
     return (await this.repositorio.findOne({ where: { id: uid } }));
   }
 
@@ -32,6 +32,10 @@ export class RepositorioUsuarioMysql implements RepositorioUsuario {
     return (await this.repositorio.update({ id: uid }, { acumulacion_compras_mensual })) ? true : false;
   }
 
+  async obtenerUsuarioPorNombre(nombre: string): Promise<UsuarioEntidad | null> {
+    return (await this.repositorio.findOne({ where: { nombre: nombre } }));
+  }
+
   async guardar(usuario: Usuario) {
     const entidad = new UsuarioEntidad();
     entidad.clave = usuario.clave;
@@ -39,6 +43,6 @@ export class RepositorioUsuarioMysql implements RepositorioUsuario {
     entidad.nombre = usuario.nombre;
     entidad.edad = usuario.edad;
     entidad.fecha_ultima_compra = usuario.fecha_creacion;
-    await this.repositorio.save(entidad);
+    return await this.repositorio.save(entidad);
   }
 }

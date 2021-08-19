@@ -5,14 +5,14 @@ import { Usuario } from 'src/dominio/usuario/modelo/usuario';
 
 @Injectable()
 export class ManejadorRegistrarUsuario {
-  constructor(private _servicioRegistrarUsuario: ServicioRegistrarUsuario) {}
+  constructor(private _servicioRegistrarUsuario: ServicioRegistrarUsuario) { }
 
   async ejecutar(comandoRegistrarUsuario: ComandoRegistrarUsuario) {
     return this._servicioRegistrarUsuario.ejecutar(
       new Usuario(
         comandoRegistrarUsuario.nombre,
         comandoRegistrarUsuario.clave,
-        comandoRegistrarUsuario.fechaCreacion,
+        comandoRegistrarUsuario.fecha_creacion,
         comandoRegistrarUsuario.edad
       ),
     );

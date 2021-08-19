@@ -9,24 +9,29 @@ import { ManejadorListarUsuario } from 'src/aplicacion/usuario/consulta/listar-u
 import { DaoUsuario } from 'src/dominio/usuario/puerto/dao/dao-usuario';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioEntidad } from '../entidad/usuario.entidad';
+import { ServicioLoguearUsuario } from 'src/dominio/usuario/servicio/servicio-loguear-usuario';
+import { servicioLoguearUsuarioProveedor } from './servicio/servicio-loguear-usuario.proveedor';
+import { ManejadorLoguearUsuario } from 'src/aplicacion/usuario/comando/loguear-usuario.manejador';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UsuarioEntidad]), /* ReservaProveedorModule */],
   providers: [
     { provide: ServicioRegistrarUsuario, inject: [RepositorioUsuario], useFactory: servicioRegistrarUsuarioProveedor },
+    { provide: ServicioLoguearUsuario, inject: [RepositorioUsuario], useFactory: servicioLoguearUsuarioProveedor },
+
     repositorioUsuarioProvider,
     daoUsuarioProvider,
     ManejadorRegistrarUsuario,
     ManejadorListarUsuario,
-    // {provide:RepositorioUsuario, useValue:RepositorioUsuario}
+    ManejadorLoguearUsuario
   ],
   exports: [
     ServicioRegistrarUsuario,
     ManejadorRegistrarUsuario,
     ManejadorListarUsuario,
+    ManejadorLoguearUsuario,
     RepositorioUsuario,
     DaoUsuario,
-    // RepositorioUsuario
   ],
 })
 export class UsuarioProveedorModule {

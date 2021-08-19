@@ -27,7 +27,6 @@ describe('ServicioRalizarReserva', () => {
     fecha_creacion: new Date()
   };
 
-
   beforeEach(() => {
 
     repositorioUsuarioStub = createStubObj<RepositorioUsuario>([
@@ -127,29 +126,4 @@ describe('ServicioRalizarReserva', () => {
     expect(repositorioUsuarioStub.existeUsuario.calledWith(reserva.uid)).toBeTruthy();
   });
 
-  // it(`si el usuario realiza una compra un mes después`, async()=>{;
-
-
-  // })
-
-  //   it('si el nombre de usuario ya existe no se puede crear y deberia retonar error', async () => {
-
-  //     repositorioUsuarioStub.existeNombreUsuario.returns(Promise.resolve(true));
-
-  //     await expect(
-  //         servicioRalizarReserva.ejecutar(
-  //         new Reserva('juan', '1234', new Date().toISOString(), 10),
-  //       ),
-  //     ).rejects.toThrow('El nombre de usuario juan ya existe');
-  //   });
-
-  //   it('si el nombre no existe guarda el usuario el repositorio', async () => {
-  //     const usuario = new Reserva('juan', '1234', new Date().toISOString(), 10);
-  //     repositorioUsuarioStub.existeNombreUsuario.returns(Promise.resolve(false));
-
-  //     await servicioRalizarReserva.ejecutar(usuario);
-
-  //     expect(repositorioUsuarioStub.guardar.getCalls().length).toBe(1);
-  //     expect(repositorioUsuarioStub.guardar.calledWith(usuario)).toBeTruthy();
-  //   });
 });

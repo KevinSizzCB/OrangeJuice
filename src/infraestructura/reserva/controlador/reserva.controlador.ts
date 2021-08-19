@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ComandoRalizarReserva } from 'src/aplicacion/reserva/comando/realizar-reserva.comando';
 import { ManejadorRalizarReserva } from 'src/aplicacion/reserva/comando/realizar-reserva.manejador';
 import { ManejadorListarReserva } from 'src/aplicacion/reserva/consulta/listar-pedidos.manejador';
@@ -18,7 +18,7 @@ export class ReservaControlador {
   }
 
   @Get()
-  async listar(): Promise<ReservaDto[]> {
-    return this._manejadorListarReserva.ejecutar();
+  async listar(@Query('uid') uid: number): Promise<ReservaDto[]> {
+    return this._manejadorListarReserva.ejecutar(uid);
   }
 }

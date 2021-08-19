@@ -51,6 +51,8 @@ export class ServicioRalizarReserva {
     }
 
     await this._repositorioUsuario.actualizarCompras(reserva.uid, reserva.fecha_creacion);
+    console.log("getted reserva", reserva);
+
     return this._repositorioReserva.guardar(reserva);
   }
 }

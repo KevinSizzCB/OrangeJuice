@@ -11,7 +11,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const logger = await app.resolve(AppLogger);
   const configService = app.get(ConfigService);
-
+  app.enableCors();
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new FiltroExcepcionesDeNegocio(logger));
 

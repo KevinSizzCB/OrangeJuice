@@ -3,11 +3,11 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class ComandoRegistrarUsuario {
   @IsString()
-  @ApiProperty({ example: 'William'})
+  @ApiProperty({ example: 'William' })
   public nombre: string;
 
   @IsNumber()
-  @ApiProperty({ example: 0})
+  @ApiProperty({ example: 0 })
   public edad: number;
 
   @IsString()
@@ -16,5 +16,5 @@ export class ComandoRegistrarUsuario {
 
   @IsDateString()
   @ApiProperty({ type: Date })
-  public fechaCreacion: string;
+  public fecha_creacion: string;
 }
