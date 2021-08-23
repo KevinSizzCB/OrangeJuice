@@ -1,0 +1,15 @@
+{
+  "type": "postgres",
+  "host": "db",
+  "port": "5432",
+  "username": "postgres",
+  "password": "skt123.321",
+  "database": "postgres",
+  "synchronize": false,
+  "entities": ["dist/**/*.entidad{.ts,.js}"],
+  "migrationsTableName": "migration_history",
+  "migrations": ["dist/infraestructura/migraciones/*.js"],
+  "cli": {
+    "migrationsDir": "src/infraestructura/migraciones"
+  }
+}

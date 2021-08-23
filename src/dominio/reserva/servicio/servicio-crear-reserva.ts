@@ -23,58 +23,61 @@ export class ServicioRalizarReserva {
   }
 
   async ejecutar(reserva: Reserva) {
-    if (!(await this._repositorioUsuario.existeUsuario(reserva.uid))) {
+    const usuario = await this._repositorioUsuario.obtenerUsuario(reserva.uid);
+    if (!usuario) {
       throw new ErrorDeNegocio('Usuario no encontrado');
-    }
-
-    const {
-      edad,
-      fecha_ultima_compra,
-      acumulacion_compras_mensual,
-    } = await this._repositorioUsuario.obtenerUsuario(reserva.uid);
-
-    if (edad < this.edadMaximaParaDescuento) {
-      reserva.precio_total =
-        reserva.precio_total -
-        this.calcularPorcentaje(
-          reserva.precio_total,
-          this.descuentoMenoresDeEdad,
-        );
-    }
-    if (
-      acumulacion_compras_mensual > this.minimoComprasMensualesParaDescuento
-    ) {
-      reserva.precio_total =
-        reserva.precio_total -
-        this.calcularPorcentaje(
-          reserva.precio_total,
-          this.descuentoMaximoComprasMensuales,
-        );
-    }
-    if (reserva.validarDiaFestivo(reserva.fecha_creacion)) {
-      reserva.precio_total = reserva.precio_total + this.recargoDiasFestivos;
-    }
-
-    const now = new Date();
-    if (
-      fecha_ultima_compra.getMonth() === now.getMonth() &&
-      fecha_ultima_compra.getFullYear() === now.getFullYear()
-    ) {
-      await this._repositorioUsuario.actualizarAcumuladorMensual(
-        reserva.uid,
-        acumulacion_compras_mensual + 1,
-      );
     } else {
-      await this._repositorioUsuario.actualizarAcumuladorMensual(
+
+      const {
+        edad,
+        fecha_ultima_compra,
+        acumulacion_compras_mensual,
+      } = usuario;
+
+      if (edad < this.edadMaximaParaDescuento) {
+        reserva.precio_total =
+          reserva.precio_total -
+          this.calcularPorcentaje(
+            reserva.precio_total,
+            this.descuentoMenoresDeEdad,
+          );
+      }
+      if (
+        acumulacion_compras_mensual > this.minimoComprasMensualesParaDescuento
+      ) {
+        reserva.precio_total =
+          reserva.precio_total -
+          this.calcularPorcentaje(
+            reserva.precio_total,
+            this.descuentoMaximoComprasMensuales,
+          );
+      }
+      if (reserva.validarDiaFestivo(reserva.fecha_creacion)) {
+        reserva.precio_total = reserva.precio_total + this.recargoDiasFestivos;
+      }
+
+      const now = new Date();
+      if (
+        fecha_ultima_compra.getMonth() === now.getMonth() &&
+        fecha_ultima_compra.getFullYear() === now.getFullYear()
+      ) {
+        await this._repositorioUsuario.actualizarAcumuladorMensual(
+          reserva.uid,
+          acumulacion_compras_mensual + 1,
+        );
+      } else {
+        await this._repositorioUsuario.actualizarAcumuladorMensual(
+          reserva.uid,
+          0,
+        );
+      }
+
+      await this._repositorioUsuario.actualizarCompras(
         reserva.uid,
-        0,
+        reserva.fecha_creacion,
       );
+      return this._repositorioReserva.guardar(reserva);
     }
 
-    await this._repositorioUsuario.actualizarCompras(
-      reserva.uid,
-      reserva.fecha_creacion,
-    );
-    return this._repositorioReserva.guardar(reserva);
   }
 }

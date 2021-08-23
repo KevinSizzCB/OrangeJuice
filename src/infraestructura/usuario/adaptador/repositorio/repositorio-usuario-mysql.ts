@@ -20,11 +20,11 @@ export class RepositorioUsuarioMysql implements RepositorioUsuario {
     return this.repositorio.findOne({ where: { id: uid } });
   }
 
-  async existeUsuario(uid: number): Promise<boolean> {
-    return (await this.repositorio.findOne({ where: { id: uid } }))
-      ? true
-      : false;
-  }
+  // async existeUsuario(uid: number): Promise<boolean> {
+  //   return (await this.repositorio.findOne({ where: { id: uid } }))
+  //     ? true
+  //     : false;
+  // }
 
   async actualizarCompras(uid: number, fecha: Date): Promise<boolean> {
     return (await this.repositorio.update(

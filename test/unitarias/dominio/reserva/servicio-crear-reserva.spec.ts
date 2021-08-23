@@ -31,7 +31,6 @@ describe('ServicioRalizarReserva', () => {
       'obtenerUsuario',
       'actualizarAcumuladorMensual',
       'actualizarCompras',
-      'existeUsuario',
     ]);
     repositorioReservaStub = createStubObj<RepositorioReserva>(['guardar']);
     servicioRalizarReserva = new ServicioRalizarReserva(
@@ -47,16 +46,11 @@ describe('ServicioRalizarReserva', () => {
       new Date().toISOString(),
     );
 
-    repositorioUsuarioStub.existeUsuario.returns(Promise.resolve(true));
     repositorioUsuarioStub.obtenerUsuario.returns(Promise.resolve(usuario));
     const PRECIO_ESPERADO = SUBTOTAL_JUGOS - CINCO_PORCIENTO_JUGOS;
 
     await servicioRalizarReserva.ejecutar(reserva);
 
-    expect(repositorioUsuarioStub.existeUsuario.getCalls().length).toBe(1);
-    expect(
-      repositorioUsuarioStub.existeUsuario.calledWith(reserva.uid),
-    ).toBeTruthy();
     expect(repositorioUsuarioStub.obtenerUsuario.getCalls().length).toBe(1);
     expect(
       repositorioUsuarioStub.actualizarAcumuladorMensual.getCalls().length,
@@ -89,16 +83,12 @@ describe('ServicioRalizarReserva', () => {
       new Date().toISOString(),
     );
 
-    repositorioUsuarioStub.existeUsuario.returns(Promise.resolve(true));
     repositorioUsuarioStub.obtenerUsuario.returns(Promise.resolve(usuario));
     const PRECIO_ESPERADO = SUBTOTAL_JUGOS - DOS_PORCIENTO_JUGOS;
 
     await servicioRalizarReserva.ejecutar(reserva);
 
-    expect(repositorioUsuarioStub.existeUsuario.getCalls().length).toBe(1);
-    expect(
-      repositorioUsuarioStub.existeUsuario.calledWith(reserva.uid),
-    ).toBeTruthy();
+
     expect(repositorioUsuarioStub.obtenerUsuario.getCalls().length).toBe(1);
     expect(
       repositorioUsuarioStub.actualizarAcumuladorMensual.getCalls().length,
@@ -134,16 +124,12 @@ describe('ServicioRalizarReserva', () => {
       DIA_FESTIVO.toISOString(),
     );
 
-    repositorioUsuarioStub.existeUsuario.returns(Promise.resolve(true));
     repositorioUsuarioStub.obtenerUsuario.returns(Promise.resolve(usuario));
     const PRECIO_ESPERADO = SUBTOTAL_JUGOS + RECARGO_FESTIVOS;
 
     await servicioRalizarReserva.ejecutar(reserva);
 
-    expect(repositorioUsuarioStub.existeUsuario.getCalls().length).toBe(1);
-    expect(
-      repositorioUsuarioStub.existeUsuario.calledWith(reserva.uid),
-    ).toBeTruthy();
+
     expect(repositorioUsuarioStub.obtenerUsuario.getCalls().length).toBe(1);
     expect(
       repositorioUsuarioStub.actualizarAcumuladorMensual.getCalls().length,
@@ -167,7 +153,7 @@ describe('ServicioRalizarReserva', () => {
   });
 
   it('si el usuario no existe', async () => {
-    repositorioUsuarioStub.existeUsuario.returns(Promise.resolve(false));
+    repositorioUsuarioStub.obtenerUsuario.returns(Promise.resolve(null));
 
     const reserva: Reserva = new Reserva(
       usuario.id,
@@ -177,9 +163,6 @@ describe('ServicioRalizarReserva', () => {
     await expect(servicioRalizarReserva.ejecutar(reserva)).rejects.toThrow(
       'Usuario no encontrado',
     );
-    expect(repositorioUsuarioStub.existeUsuario.getCalls().length).toBe(1);
-    expect(
-      repositorioUsuarioStub.existeUsuario.calledWith(reserva.uid),
-    ).toBeTruthy();
+
   });
 });
