@@ -29,7 +29,6 @@ describe('ServicioRalizarReserva', () => {
   beforeEach(() => {
     repositorioUsuarioStub = createStubObj<RepositorioUsuario>([
       'obtenerUsuario',
-      'actualizarAcumuladorMensual',
       'actualizarCompras',
     ]);
     repositorioReservaStub = createStubObj<RepositorioReserva>(['guardar']);
@@ -52,20 +51,12 @@ describe('ServicioRalizarReserva', () => {
     await servicioRalizarReserva.ejecutar(reserva);
 
     expect(repositorioUsuarioStub.obtenerUsuario.getCalls().length).toBe(1);
-    expect(
-      repositorioUsuarioStub.actualizarAcumuladorMensual.getCalls().length,
-    ).toBe(1);
-    expect(
-      repositorioUsuarioStub.actualizarAcumuladorMensual.calledWith(
-        usuario.id,
-        usuario.acumulacion_compras_mensual + 1,
-      ),
-    ).toBeTruthy();
     expect(repositorioUsuarioStub.actualizarCompras.getCalls().length).toBe(1);
     expect(
       repositorioUsuarioStub.actualizarCompras.calledWith(
         usuario.id,
         reserva.fecha_creacion,
+        usuario.acumulacion_compras_mensual + 1,
       ),
     ).toBeTruthy();
     expect(repositorioReservaStub.guardar.getCalls().length).toBe(1);
@@ -88,22 +79,13 @@ describe('ServicioRalizarReserva', () => {
 
     await servicioRalizarReserva.ejecutar(reserva);
 
-
     expect(repositorioUsuarioStub.obtenerUsuario.getCalls().length).toBe(1);
-    expect(
-      repositorioUsuarioStub.actualizarAcumuladorMensual.getCalls().length,
-    ).toBe(1);
-    expect(
-      repositorioUsuarioStub.actualizarAcumuladorMensual.calledWith(
-        usuario.id,
-        usuario.acumulacion_compras_mensual + 1,
-      ),
-    ).toBeTruthy();
     expect(repositorioUsuarioStub.actualizarCompras.getCalls().length).toBe(1);
     expect(
       repositorioUsuarioStub.actualizarCompras.calledWith(
         usuario.id,
         reserva.fecha_creacion,
+        usuario.acumulacion_compras_mensual + 1,
       ),
     ).toBeTruthy();
     expect(repositorioReservaStub.guardar.getCalls().length).toBe(1);
@@ -129,22 +111,13 @@ describe('ServicioRalizarReserva', () => {
 
     await servicioRalizarReserva.ejecutar(reserva);
 
-
     expect(repositorioUsuarioStub.obtenerUsuario.getCalls().length).toBe(1);
-    expect(
-      repositorioUsuarioStub.actualizarAcumuladorMensual.getCalls().length,
-    ).toBe(1);
-    expect(
-      repositorioUsuarioStub.actualizarAcumuladorMensual.calledWith(
-        usuario.id,
-        usuario.acumulacion_compras_mensual + 1,
-      ),
-    ).toBeTruthy();
     expect(repositorioUsuarioStub.actualizarCompras.getCalls().length).toBe(1);
     expect(
       repositorioUsuarioStub.actualizarCompras.calledWith(
         usuario.id,
         reserva.fecha_creacion,
+        usuario.acumulacion_compras_mensual + 1,
       ),
     ).toBeTruthy();
     expect(repositorioReservaStub.guardar.getCalls().length).toBe(1);
@@ -163,6 +136,5 @@ describe('ServicioRalizarReserva', () => {
     await expect(servicioRalizarReserva.ejecutar(reserva)).rejects.toThrow(
       'Usuario no encontrado',
     );
-
   });
 });

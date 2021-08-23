@@ -12,7 +12,7 @@ export class ServicioRalizarReserva {
   ) { }
 
   private readonly edadMaximaParaDescuento = 18;
-  private readonly minimoComprasMensualesParaDescuento = 5;
+  private readonly minimoComprasMensualesParaDescuento = 4;
   private readonly descuentoMenoresDeEdad = 5;
   private readonly descuentoMaximoComprasMensuales = 2;
   private readonly recargoDiasFestivos = 2000;
@@ -27,7 +27,6 @@ export class ServicioRalizarReserva {
     if (!usuario) {
       throw new ErrorDeNegocio('Usuario no encontrado');
     } else {
-
       const {
         edad,
         fecha_ultima_compra,
@@ -57,27 +56,19 @@ export class ServicioRalizarReserva {
       }
 
       const now = new Date();
-      if (
+
+      const valorAcumucladorMensual =
         fecha_ultima_compra.getMonth() === now.getMonth() &&
-        fecha_ultima_compra.getFullYear() === now.getFullYear()
-      ) {
-        await this._repositorioUsuario.actualizarAcumuladorMensual(
-          reserva.uid,
-          acumulacion_compras_mensual + 1,
-        );
-      } else {
-        await this._repositorioUsuario.actualizarAcumuladorMensual(
-          reserva.uid,
-          0,
-        );
-      }
+          fecha_ultima_compra.getFullYear() === now.getFullYear()
+          ? acumulacion_compras_mensual + 1
+          : 0;
 
       await this._repositorioUsuario.actualizarCompras(
         reserva.uid,
         reserva.fecha_creacion,
+        valorAcumucladorMensual,
       );
       return this._repositorioReserva.guardar(reserva);
     }
-
   }
 }

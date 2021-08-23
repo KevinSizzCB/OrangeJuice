@@ -2,7 +2,7 @@ import { RepositorioUsuario } from 'src/dominio/usuario/puerto/repositorio/repos
 import { Usuario } from 'src/dominio/usuario/modelo/usuario';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UsuarioEntidad } from '../../entidad/usuario.entidad';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
@@ -20,31 +20,15 @@ export class RepositorioUsuarioMysql implements RepositorioUsuario {
     return this.repositorio.findOne({ where: { id: uid } });
   }
 
-  // async existeUsuario(uid: number): Promise<boolean> {
-  //   return (await this.repositorio.findOne({ where: { id: uid } }))
-  //     ? true
-  //     : false;
-  // }
-
-  async actualizarCompras(uid: number, fecha: Date): Promise<boolean> {
-    return (await this.repositorio.update(
-      { id: uid },
-      { fecha_ultima_compra: fecha },
-    ))
-      ? true
-      : false;
-  }
-
-  async actualizarAcumuladorMensual(
+  async actualizarCompras(
     uid: number,
+    fecha: Date,
     acumulacion_compras_mensual: number,
-  ): Promise<boolean> {
-    return (await this.repositorio.update(
+  ): Promise<UpdateResult> {
+    return this.repositorio.update(
       { id: uid },
-      { acumulacion_compras_mensual },
-    ))
-      ? true
-      : false;
+      { fecha_ultima_compra: fecha, acumulacion_compras_mensual },
+    );
   }
 
   async obtenerUsuarioPorNombre(
