@@ -45,7 +45,7 @@
                 <stringProp name="Argument.value">{&#xd;
 	&quot;nombre&quot;:&quot;${__RandomString(6,1236547890,)}&quot;,&#xd;
 	&quot;clave&quot;:&quot;1478&quot;,&#xd;
-	&quot;fecha_creacion&quot;: &quot;2021-08-23T16:16:32.781Z&quot;,&#xd;
+	&quot;fecha_creacion&quot;: &quot;2021-08-24T16:16:32.781Z&quot;,&#xd;
 	&quot;edad&quot;: 19&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
@@ -149,9 +149,9 @@
               <elementProp name="" elementType="HTTPArgument">
                 <boolProp name="HTTPArgument.always_encode">false</boolProp>
                 <stringProp name="Argument.value">{&#xd;
-	&quot;uid&quot;:13,&#xd;
+	&quot;uid&quot;:13946,&#xd;
 	&quot;fecha_creacion&quot;: &quot;2021-08-23T16:16:32.781Z&quot;,&#xd;
-	&quot;cantidad_jugos&quot;: 19&#xd;
+	&quot;cantidad_jugos&quot;: 2&#xd;
 }</stringProp>
                 <stringProp name="Argument.metadata">=</stringProp>
               </elementProp>
